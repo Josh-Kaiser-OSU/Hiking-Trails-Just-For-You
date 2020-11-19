@@ -5,10 +5,10 @@ class Coordinates{
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
-	getLongitude(){
+	get getLongitude(){
 		return this.longitude;
 	}
-	getLatitude(){
+	get getLatitude(){
 		return this.latitude;
 	}
 }
@@ -55,7 +55,7 @@ class TrailList{
 	addTrail(newTrail){
 			this.trails.push(newTrail);
 	}
-	getTrail(index){
+	get getTrail(index){
 		return this.trails[index];
 	}
 	deleteTrail(index){
@@ -64,7 +64,7 @@ class TrailList{
 		}
 		this.trails.pop();
 	}
-	getLength(){
+	get getLength(){
 		return this.trails.length;
 	}
 }
