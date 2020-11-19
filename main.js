@@ -1,9 +1,21 @@
 var express = require('express');
 const path = require('path');
 
+
 //import Trail_API
 // ** This Trail_API is mock data because we were locked out of the API **
 const Trail_API = require('./local_trail_api.js').Trail_API;
+//import ZIP
+const ZipToLatLong = require('./zip_to_lat_long.js').ZipToLatLong;
+const zipToCoords = new ZipToLatLong();
+// For testing ZipToCoords
+zipToCoords.convert(90210)
+.then((result)=>{
+console.log(result);
+})
+.catch((error)=>{
+    console.log(error);
+});
 
 //use express handlebars
 var app = express();
@@ -11,7 +23,7 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 3000);
+app.set('port', '3000');
 
 
 //establish static page for js and css files
@@ -38,7 +50,8 @@ app.post('/trails',function(req,res){
   console.log("requested longitude: ", req.longitude);
   request_lat = 40.0274;
   request_long = -105.2519;
-  res.render('trails', {"trailList": newLocation(la_latitude, la_longitude)});
+  res.render('trails');
+  //, {"trailList": newLocation(la_latitude, la_longitude)});
 });
 
 //error status 404
