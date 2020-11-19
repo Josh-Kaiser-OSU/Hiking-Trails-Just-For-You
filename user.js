@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 53826);
 
 //get function -- still needs to be rewritten for the user bit,
 //but probably better applied to the trail recommendation
@@ -59,11 +58,6 @@ app.use(function(err, req, res, next){
   res.send('500 - Server Error');
 });
 
-//need to find a port to operate off of
-app.listen(app.get('port'), function(){
-  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
-});
-
 /* modified from code put together by Ai Vu, and updated to adjust for
 return types independent of strings */
 
@@ -76,7 +70,7 @@ let User = class {
             this.height = height;    
             //weight = user weight in pounds
             this.weight = weight;
-            //exercise_time = user reported avg length of workout
+            //exercise_time = user reported avg length of workout in min
             this.exercise_time = exercise_time;
             //exercise_days = user reported avg days worked out per week
             this.exercise_days = exercise_days;
@@ -94,6 +88,58 @@ let User = class {
     calcBMI() {
         return this.weight / this.height;
     }
+    
+    //Getter for the User Rec
+    get userRec() {
+        return this.calcRec();
+    }
+
+    //the method to calculate the user rec
+    calcRec() {
+        //this will be an int 0-6 for the user
+        var userRec = 0;
+
+        //if the user is less than 55, give a +1 for rec
+        if (this.age < 55){
+            userRec = userRec + 1;
+        }
+        //if the user's BMI is in healthy range, give a +2 for rec
+        if (this.bmi >= 25 && this.bmi <= 30){
+            userRec = userRec + 2;
+        } 
+        //else if the user is slightly overweight, but not morbidly obese,
+        //just give +1
+        else if (this.bmi > 30 && this.bmi <= 35){
+            userRec = userRec + 1;
+        }
+        //if the user exercises 4 days a week, give a +1
+        if (this.exercise_days > 4){
+            userRec = userRec + 1;
+        }
+        //if the user's exercise time is > 30 minutes, give a +1
+        if (this.exercise_time > 30){
+            userRec = userRec + 1
+        }
+        //if the user has hiking experience, give a +1
+        if (this.hiking_exp){
+            userRec = userRec + 1;
+        }
+        //if the user is assessing their health adversely, and userRec
+        //is already above 1, subtract 1 to give easier rec
+        if (this.health_assess == 0 && userRec > 1){
+            userRec = userRec - 1;
+        }
+
+        //return the final recommendation
+        return userRec;
+    }
 };
 
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+  
 
