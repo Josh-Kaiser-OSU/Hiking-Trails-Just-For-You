@@ -3,6 +3,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');   // how we will save user
+var cookieParser = require('cookie-parser'); //cookie middleware
 
 var app = express();
 //handlebars to handle templating
@@ -13,38 +14,11 @@ app.use(session({secret:'SuperSecretPassword'}));
 //bodyParser is important for post methods
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-//get function -- still needs to be rewritten for the user bit,
-//but probably better applied to the trail recommendation
-app.get('/',function(req,res){
-  var context = {};
-  context.count = req.session.count || 0;
-  req.session.count = context.count + 1;
-  res.render('counter', context);
-});
-
-//this code is left over from another assignment
-/*
-resetButton.addEventListener("click", e => {
-  req.session.count = 0;
-})*/
-
-//this post function will need to be rewritten to parse and
-//save as a "user"
-app.post('/', function(req,res){
-    var qParams = "";
-    for (var p in req.query){
-      qParams += "POST request received: " + req.query[p];
-    }
-
-    var context = {};
-    context.dataList = qParams;
-    res.render('home', {context : qParams});
-  });
-  
 app.use(function(req,res){
   res.type('text/plain');
   res.status(404);
@@ -62,8 +36,11 @@ app.use(function(err, req, res, next){
 return types independent of strings */
 
 let User = class {
-    constructor(age, height, weight, exercise_time, exercise_days,
+    constructor(first, last, age, height, weight, exercise_time, exercise_days,
         hiking_exp, health_assess) {
+            //user name
+            this.firstname = first;
+            this.lastname = last;
             //age = user age
             this.age = age;
             //height = user height in inches
@@ -135,11 +112,17 @@ let User = class {
     }
 };
 
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-  
+  const handleFormSubmit = event => {
+    // Stop the form from submitting since we’re handling that with AJAX.
+    event.preventDefault();
 
+    //use form elements to create a session user
+    var sessUser = new User(UserForm.first.value, UserForm.last.value, UserForm.age.value, UserForm.height.value, 
+        UserForm.weight.value, UserForm.exercise_time.value, UserForm.exercise_days.value,
+        UserForm.hiking_exp.value, UserForm.health_assess.value);
+
+    //JSON-ify that user and save to a cookie
+    document.cookie = 'userProfile='+JSON.stringify(sessUser);
+  };
+  const form = document.getElementsByClassName('UserForm')[0];
+  form.addEventListener('submit', handleFormSubmit);
