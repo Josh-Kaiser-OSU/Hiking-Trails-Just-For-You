@@ -3,7 +3,7 @@ var Coordinates = require('./trail.js').Coordinates;
 var Trail = require('./trail.js').Trail;
 var TrailList = require('./trail.js').TrailList;
 var https = require('https');
-var fs = require('fs');
+
 class Trail_API {
     constructor (latitude, longitude, distance = 10) {
         // User's latitude
