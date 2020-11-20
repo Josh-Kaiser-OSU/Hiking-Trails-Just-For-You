@@ -55,7 +55,7 @@ class TrailList{
 	addTrail(newTrail){
 			this.trails.push(newTrail);
 	}
-	get getTrail(index){
+	getTrail(index){
 		return this.trails[index];
 	}
 	deleteTrail(index){
