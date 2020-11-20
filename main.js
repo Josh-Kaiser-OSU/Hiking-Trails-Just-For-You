@@ -1,4 +1,5 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 const path = require('path');
 
 
@@ -13,6 +14,9 @@ const zipToCoords = new ZipToLatLong();
 //use express handlebars
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -38,10 +42,10 @@ app.get('/trails',function(req, res){
 
 //load Trail display after new location input
 app.post('/trails',function(req,res){
-  // ** this area is not currently working **
-  zipToCoords.convert(90210)
+  // We need to find zipToCoords Asynchronously
+  zipToCoords.convert(req.body.zipcode)
   .then((result)=>{
-    var request_lat, request_long = result;
+    var [request_lat, request_long] = result;
     console.log(request_lat, request_long);
     var thetrails = newLocation(request_lat, request_long);
     res.render('trails', {"trailList": thetrails});
