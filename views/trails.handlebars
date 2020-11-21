@@ -32,7 +32,10 @@
               <b>{{this.name}}</b>
               <span>Trail Length: {{this.length}}</span>
               <span>Trail Difficulty: {{this.difficulty}}</span>
-              <button> More Information </button>
+              <button class="expandButton"> More Information </button>
+              <div class="hiddenDiv">
+                <span>{{this.description}}</span>
+              </div>
     		</div>
       {{/each}}
   	</div>
@@ -40,7 +43,7 @@
     {{#each js}}
       <link href="./js/{{this}}", rel="stylesheet">
     {{/each}}
-<script src="/js/location.js"></script>
+<script src="/js/moreTrailInfo.js"></script>
 </body>
 
 </html>
