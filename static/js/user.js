@@ -82,10 +82,19 @@ let User = class {
     // Stop the form from submitting since we’re handling that with AJAX.
     event.preventDefault();
 
+    var first = document.getElementById("first").value;
+    var last = document.getElementById("last").value;
+    var age = document.getElementById("age").value;
+    var height = document.getElementById("height").value;
+    var weight = document.getElementById("weight").value;
+    var exercise_time = document.getElementById("exercise_time").value;
+    var exercise_days = document.getElementById("exercise_days").value;
+    var hiking_exp = document.getElementById("hiking_exp").value;
+    var health_assess = document.getElementById("health_assess").value;
+
     //use form elements to create a session user
-    var sessUser = new User(UserForm.first.value, UserForm.last.value, UserForm.age.value, UserForm.height.value, 
-        UserForm.weight.value, UserForm.exercise_time.value, UserForm.exercise_days.value,
-        UserForm.hiking_exp.value, UserForm.health_assess.value);
+    var sessUser = new User(first, last, age, height, weight, exercise_time, exercise_days,
+        hiking_exp, health_assess);
 
     //JSON-ify that user and save to a cookie
     document.cookie = 'userProfile='+JSON.stringify(sessUser);
