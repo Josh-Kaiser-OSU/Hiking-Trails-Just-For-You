@@ -133,7 +133,7 @@
   </head>
   <body>
     <div class="testbox">
-      <form name="UserForm" class="UserForm" action="/">
+        <form name="UserForm" class="UserForm" action="/">
         <div class="banner">
           <h1>Hiking Trails For You</h1>
         </div>
@@ -141,14 +141,14 @@
         <div class="item">
           <p>Name<span class="required">*</span></p>
           <div class="name-item">
-            <input type="text" name="name" placeholder="First" required/>
-            <input type="text" name="name" placeholder="Last" required/>
+            <input type="text" id="first" name="name" placeholder="First" required/>
+            <input type="text" id="last" name="name" placeholder="Last" required/>
           </div>
         </div>
         <div class="item">
           <p>Age<span class="required">*</span></p>
           <div class="question-answer">
-            <input type="number" name="age" required/>
+            <input type="number" id="age" name="age" required/>
           </div>
         </div>
         <div class="item">
@@ -195,7 +195,7 @@
           </div>
         <div class="item">
           <p>Your current weight in lbs<span class="required">*</span></p>
-          <input type="number" name="weight"/>
+          <input type="number" id="weight" name="weight"/>
         </div>
         <div class="item">
           <p>Average days per week you work out:<span class="required">*</span></p>
@@ -223,14 +223,14 @@
         <div class="question">
           <p>Do you have hiking experience?<span class="required">*</span></p>
           <div class="question-answer">
-            <label><input type="radio" value="1" name="hiking_exp" required/> <span>Yes</span></label>
-            <label><input type="radio" value="0" name="hiking_exp" required/> <span>No</span></label>
+            <label><input type="radio" value="1" id="hiking_exp" name="hiking_exp" required/> <span>Yes</span></label>
+            <label><input type="radio" value="0" id="hiking_exp" name="hiking_exp" required/> <span>No</span></label>
           </div>
           <div class="question">
             <p>Do you currently have any health concerns?<span class="required">*</span></p>
             <div class="question-answer">
-              <label><input type="radio" value="1" name="health_assess" required/> <span>Yes</span></label>
-              <label><input type="radio" value="0" name="health_assess" required/> <span>No</span></label>
+              <label><input type="radio" value="1" id="health_assess" name="health_assess" required/> <span>Yes</span></label>
+              <label><input type="radio" value="0" id="health_assess" name="health_assess" required/> <span>No</span></label>
             </div>
         </div>
         <div class="btn-block">
@@ -241,4 +241,3 @@
     <script src="user.js"></script>
   </body>
 </html>
-
