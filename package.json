@@ -18,10 +18,10 @@
   "homepage": "https://github.com/Josh-Kaiser-OSU/Hiking-Trails-Just-For-You#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "express-session": "^1.17.1",
-    "cookie-parser": "^1.4.5",
     "fs": "0.0.1-security",
     "https": "^1.0.0"
   }

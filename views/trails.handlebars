@@ -6,16 +6,25 @@
   <title></title>
   
   <link rel="stylesheet" href ="/css/trail_style.css">
+  <link rel="stylesheet" href ="/css/header_style.css">
 </head>
 
 <body>
 
 <!-- Navigation Bar -->
-  <div class = "header">
-  	<div class = "trailTab" class = "active"> Trails </div>
-  	<div class = "userTab"> Profile </div>
-  </div>
-
+	<div class = "header">
+	  <div class = "trailTab">
+	    <form method = "GET" action = "/">
+	      <input type = "submit" value = "Profile">
+	    </form> 
+	  </div>
+	  <div class = "userTab"> 
+	    <form method = "GET" action = "/trails">
+	      <input type = "submit" value = "Trails">
+	    </form> 
+	  </div>
+	</div>
+    
 <!-- Page Content -->
   <div class = "content">
   	<div class = "search">
@@ -27,7 +36,7 @@
   		</form>
 
 	  <div class = "forYouFilter">
-		<form method="POST" action = "/">
+		<form method="POST" action = "/trails">
 		<label for="forYouDropDown">Just For You:</label>
 		<select name="forYouDropDown" id="forYouDropDown">
 		   <option value=""></option>

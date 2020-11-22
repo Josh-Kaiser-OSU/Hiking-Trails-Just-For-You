@@ -1,31 +1,3 @@
-.header {
-	background:#9FA4A9;
-	overflow:hidden;
-}
-
-.header div {
-	float:left;
-	text-align:center;
-	background-color:#9FA4A9;
-	color:white;
-	text-decoration:none;
-	padding:14px 16px;
-	max-width: 20%;
-}
-
-.header div:hover {
-	background-color:white;
-	color:black;
-}
-.header div.active {
-	background-color:#C2D3CD;
-	color:black;
-}
-.header div.active:hover {
-	background-color:#AFBFC0;
-	color:black;
-}
-
 #trail {
 	background-color:lightblue;
 	border-radius:5px;
