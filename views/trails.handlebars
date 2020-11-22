@@ -26,6 +26,16 @@
   			<input type = "submit"> </input>
   		</form>
 
+	  <div class = "forYouFilter">
+		<form method="POST" action = "/foryou">
+		<label for="forYouDropDown">Just For You:</label>
+		<select name="forYouDropDown" id="forYouDropDown">
+		   <option value="easy">Easy & Chill</option>
+		   <option value="medium">At My Level</option>
+		   <option value="hard">Challenge Me</option>
+		 </select>
+		 <button type="submit" href="/foryou">Save</button>
+		  
   	<div class = "trailList">
       {{#each trailList}}
     		<div id = "trail">
