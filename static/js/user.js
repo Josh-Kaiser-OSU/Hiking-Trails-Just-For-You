@@ -1,37 +1,3 @@
-//starter code pulled from sessions homework in web_dev, written by me
-
-var express = require('express');
-var bodyParser = require('body-parser');
-var session = require('express-session');   // how we will save user
-var cookieParser = require('cookie-parser'); //cookie middleware
-
-var app = express();
-//handlebars to handle templating
-var handlebars = require('express-handlebars').create({defaultLayout:'main'});
-//session starting
-app.use(session({secret:'SuperSecretPassword'}));
-
-//bodyParser is important for post methods
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'handlebars');
-
-app.use(function(req,res){
-  res.type('text/plain');
-  res.status(404);
-  res.send('404 - Not Found');
-});
-
-app.use(function(err, req, res, next){
-  console.error(err.stack);
-  res.type('plain/text');
-  res.status(500);
-  res.send('500 - Server Error');
-});
-
 /* modified from code put together by Ai Vu, and updated to adjust for
 return types independent of strings */
 
