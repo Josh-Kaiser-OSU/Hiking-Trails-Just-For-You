@@ -2,6 +2,53 @@ var Trail = require('./trail.js').Trail;
 var TrailList = require('./trail.js').TrailList;
 var User = require('./user.js').User;
 
+//Express boilerplate code
+var express = require('express');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var app = express();
+var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+
+app.use(session({secret:'SuperSecretPassword'}));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
+
+app.use(function(req,res){
+  res.type('text/plain');
+  res.status(404);
+  res.send('404 - Not Found');
+});
+
+app.use(function(err, req, res, next){
+  console.error(err.stack);
+  res.type('plain/text');
+  res.status(500);
+  res.send('500 - Server Error');
+});
+
+//get userProfile from cookie
+app.get('/trails', function(req, res){
+	userProfile = JSON.parse(req.session.userProfile);
+}
+
+//needs to make filter whenever new location is sent
+function createFilter(allTrailsList){
+	
+	filter = new ForYouFilter(userProfile, allTrailsList);
+}
+
+//runs filterList when Just For You request sent
+let form  = document.getElementByClassName('forYouFilter');
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+	filteredList = filter.filterList(forYouDropDown.value);
+	//needs to send filteredList to trails.handlebars
+});
+
 //implements the For You feature
 class ForYouFilter{
 	constructor(userProfile, allTrailsList)
@@ -21,6 +68,10 @@ class ForYouFilter{
 		
 		else if(request == "hard"){
 			return addTrails(hardCheck);
+		}
+		
+		else{
+			return allTrailsList;
 		}
 	}
 	
