@@ -31,18 +31,13 @@ class ForYouFilter{
 	
 	//goes through the main TrailList and adds Trails matching the request difficulty to the filtered TrailList
 	addTrails(checkTrail){
-		var filteredList = new TrailList()
-		for(trail in allTrailsList){
-			if(checkTrail(trail)){
-				filteredList.append(trail);
-		}
-		return filteredList;
+		var filteredList = allTrailsList.filter(checkTrail);
 	}
 		
 //checks if trail difficulty is easier than user rating		
 	easyCheck(aTrail){
 		var traildifficulty = difficultyConverter(aTrail);
-		if(userRating < traildiffuculty){
+		if(userRating < traildifficulty){
 			return true;
 		}
 		else{
@@ -53,7 +48,7 @@ class ForYouFilter{
 //checks if trail difficulty matches user rating		
 	medCheck(aTrail){
 		var traildifficulty = difficultyConverter(aTrail);
-		if(userRating == traildiffuculty){
+		if(userRating == traildifficulty){
 			return true;
 		}
 		else{
@@ -64,7 +59,7 @@ class ForYouFilter{
 //checks if trail difficulty is harder than user rating		
 	hardCheck(aTrail){
 		var traildifficulty = difficultyConverter(aTrail);
-		if(userRating < traildiffuculty){
+		if(userRating < traildifficulty){
 			return true;
 		}
 		else{
