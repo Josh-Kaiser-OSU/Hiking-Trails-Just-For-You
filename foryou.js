@@ -2,7 +2,9 @@ var Trail = require('./trail.js').Trail;
 var TrailList = require('./trail.js').TrailList;
 var User = require('./user.js').User;
 
-//Express boilerplate code
+//Moved server functionality to main.js
+
+/*Express boilerplate code
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -33,7 +35,7 @@ app.use(function(err, req, res, next){
 //get userProfile from cookie
 app.get('/trails', function(req, res){
 	userProfile = JSON.parse(req.session.userProfile);
-}
+}*/
 
 //needs to make filter whenever new location is sent
 function createFilter(allTrailsList){

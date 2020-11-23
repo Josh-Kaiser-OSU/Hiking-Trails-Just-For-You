@@ -1,6 +1,3 @@
-var Trail = require('./trail.js').Trail;
-var TrailList = require('./trail.js').TrailList;
-
 //Express boilerplate code
 var express = require('express');
 var bodyParser = require('body-parser');
