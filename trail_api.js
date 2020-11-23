@@ -12,11 +12,10 @@ class Trail_API {
         this.longitude = longitude;
         // Distance away from user trails will be found
         this.distance = distance;
-        // Josh's Trail Data API key
-        //'200932678-b6a96c1d20b73dc70bee2145176ce8a7'
-        this.keys = '200975933-0d4568298c034509b0d68a318458e7ef';
+        // Sarah's Trail Data API key
+        this.keys = '200980056-37c2769698383bb98c9b48965aa68f84';
         // The full URL for the request
-        this.url = `https://www.hikingproject.com/data/get-trails?lat=${this._latitude}&lon=${this._longitude}&maxDistance=${this._distance}&key=${this._key}`;
+        this.url = `https://www.hikingproject.com/data/get-trails?lat=${this._latitude}&lon=${this._longitude}&maxDistance=${this._distance}&key=${this._keys}`;
         this.searchTrails()
         .then(console.log("Trails received"))
         .catch(err => console.log(err));
@@ -25,7 +24,7 @@ class Trail_API {
     makeTrailsList(trailData){
         var trails = trailData.trails;
         this.allTrails = new TrailList();
-        for (var i = 0; i < trails.length; i++) {
+        for (var i = 0; i < trails.getLength(); i++) {
             // Trails arguments (name, distanceAway, length, elevation, description, latitude, longitude, difficulty)
             var aTrail = new Trail(trails[i].name,
                 0,
@@ -40,10 +39,6 @@ class Trail_API {
     }
     
     searchTrails(){
-        // var success = 0;
-        // while (success === 0){
-
-        // }
         return new Promise((resolve, reject) => {
             https.get(this.url, res => {
                 var data = '';
@@ -53,6 +48,7 @@ class Trail_API {
                 });
     
                 res.on('end', ()=> {
+                    console.log(data);
                     this.makeTrailsList(data);
                     resolve();
                 });         
