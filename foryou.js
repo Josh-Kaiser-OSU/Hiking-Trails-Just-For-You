@@ -4,7 +4,7 @@ var Trail = require('./trail.js').Trail;
 class ForYouFilter{
 	constructor(userProfile, allTrailsList, request)
 	{
-		if(userProfile.userRec){
+		if(userProfile && typeof(userProfile.userRec) != "undefined"){
 			this.userRating = userProfile.userRec
 		}
 		else
@@ -12,7 +12,7 @@ class ForYouFilter{
 			this.userRating = 3;
 		}
 		this.allTrailsList = allTrailsList;
-		filterList(request);
+		this.filterList(request);
 	}
 	
 	//returns a TrailList containing the trails that match the request difficulty
@@ -29,7 +29,7 @@ class ForYouFilter{
 		}
 		
 		else{
-			return allTrailsList;
+			return this.allTrailsList;
 		}
 	}
 	
