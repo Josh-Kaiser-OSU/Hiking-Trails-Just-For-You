@@ -95,9 +95,10 @@ let User = class {
     //use form elements to create a session user
     var sessUser = new User(first, last, age, height, weight, exercise_time, exercise_days,
         hiking_exp, health_assess);
-
+      
     //JSON-ify that user and save to a cookie
     document.cookie = 'userProfile='+JSON.stringify(sessUser);
   };
+
   const form = document.getElementsByClassName('UserForm')[0];
   form.addEventListener('submit', handleFormSubmit);
