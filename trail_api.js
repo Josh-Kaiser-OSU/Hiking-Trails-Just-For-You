@@ -15,7 +15,7 @@ class Trail_API {
         // Sarah's Trail Data API key
         this.keys = '200980056-37c2769698383bb98c9b48965aa68f84';
         // The full URL for the request
-        this.url = `https://www.hikingproject.com/data/get-trails?lat=${this._latitude}&lon=${this._longitude}&maxDistance=${this._distance}&key=${this._key}`;
+        this.url = `https://www.hikingproject.com/data/get-trails?lat=${this._latitude}&lon=${this._longitude}&maxDistance=${this._distance}&key=${this._keys}`;
         this.searchTrails()
         .then(console.log("Trails received"))
         .catch(err => console.log(err));
