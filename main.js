@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 
 //import Trail_API
 // ** This Trail_API is mock data because we were locked out of the API **
-const Trail_API = require('./local_trail_api.js').Trail_API;
+const Trail_API = require('./trail_api.js').Trail_API;
 
 //import ZipToLatLong to convert zip codes to latitude and longitude
 const ZipToLatLong = require('./zip_to_lat_long.js').ZipToLatLong;

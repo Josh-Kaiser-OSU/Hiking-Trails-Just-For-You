@@ -24,7 +24,7 @@ class Trail_API {
     makeTrailsList(trailData){
         var trails = trailData.trails;
         this.allTrails = new TrailList();
-        for (var i = 0; i < trails.length; i++) {
+        for (var i = 0; i < trails.getLength(); i++) {
             // Trails arguments (name, distanceAway, length, elevation, description, latitude, longitude, difficulty)
             var aTrail = new Trail(trails[i].name,
                 0,
@@ -39,10 +39,6 @@ class Trail_API {
     }
     
     searchTrails(){
-        // var success = 0;
-        // while (success === 0){
-
-        // }
         return new Promise((resolve, reject) => {
             https.get(this.url, res => {
                 var data = '';
@@ -52,6 +48,7 @@ class Trail_API {
                 });
     
                 res.on('end', ()=> {
+                    console.log(data);
                     this.makeTrailsList(data);
                     resolve();
                 });         
