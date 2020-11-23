@@ -1,12 +1,11 @@
 var Trail = require('./trail.js').Trail;
 
-
-
 //implements the For You feature
 class ForYouFilter{
 	constructor(userProfile, allTrailsList, request)
 	{
-		this.userRating = userProfile.userRec;
+		
+		this.userRating = userProfile.userRec || 3;
 		this.allTrailsList = allTrailsList;
 		filterList(request);
 	}
