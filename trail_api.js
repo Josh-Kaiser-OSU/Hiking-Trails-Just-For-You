@@ -12,9 +12,8 @@ class Trail_API {
         this.longitude = longitude;
         // Distance away from user trails will be found
         this.distance = distance;
-        // Josh's Trail Data API key
-        //'200932678-b6a96c1d20b73dc70bee2145176ce8a7'
-        this.keys = '200975933-0d4568298c034509b0d68a318458e7ef';
+        // Sarah's Trail Data API key
+        this.keys = '200980056-37c2769698383bb98c9b48965aa68f84';
         // The full URL for the request
         this.url = `https://www.hikingproject.com/data/get-trails?lat=${this._latitude}&lon=${this._longitude}&maxDistance=${this._distance}&key=${this._key}`;
         this.searchTrails()
