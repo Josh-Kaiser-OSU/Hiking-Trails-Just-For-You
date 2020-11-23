@@ -4,8 +4,13 @@ var Trail = require('./trail.js').Trail;
 class ForYouFilter{
 	constructor(userProfile, allTrailsList, request)
 	{
-		
-		this.userRating = userProfile.userRec || 3;
+		if(userProfile.userRec){
+			this.userRating = userProfile.userRec
+		}
+		else
+		{
+			this.userRating = 3;
+		}
 		this.allTrailsList = allTrailsList;
 		filterList(request);
 	}
