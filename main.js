@@ -50,13 +50,15 @@ app.get('/trails',function(req, res){
 app.post('/trails',function(req,res){
   //line from foryou.js to be integrated into trail display
   //userProfile = JSON.parse(req.session.userProfile);
-
+  console.log(req.cookie);
   // We need to find zipToCoords Asynchronously
   zipToCoords.convert(req.body.zipcode)
   .then((result)=>{
     var [request_lat, request_long] = result;
     console.log(request_lat, request_long);
-    var thetrails = newLocation(request_lat, request_long);
+	var user = cookieParser.JSONCookie(res.cookie.userProfile);
+    var thetrails = pingTrailAPI(request_lat, request_long, req.body.forYouDropDown, user);
+
     res.render('trails', {"trailList": thetrails});
   })
   .catch((error)=>{
@@ -65,6 +67,7 @@ app.post('/trails',function(req,res){
   
   //, {"trailList": newLocation(la_latitude, la_longitude)});
 });
+
 
 //error status 404
 app.use(function(req,res){
@@ -87,8 +90,8 @@ app.listen(app.get('port'), function(){
 });
 
 //ping the API for the location of the trail and return the trailList
-function newLocation(latitude,longitude) {
+function pingTrailAPI(latitude,longitude, forYouDropDown, user) {
   const myTrails = new Trail_API(latitude, longitude);
-  const trailFilter = ForYouFilter(myTrails.getTrails());
-  return myTrails.getTrails();
+  const filteredTrails = ForYouFilter(user,myTrails,forYouDropDown);
+  return filteredTrails.allTrailsList.getTrails();
 }
