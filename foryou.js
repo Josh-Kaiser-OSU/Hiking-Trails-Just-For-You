@@ -1,6 +1,6 @@
 var Trail = require('./trail.js').Trail;
 var TrailList = require('./trail.js').TrailList;
-var User = require('./user.js').User;
+var User = require('./static/user.js').User;
 
 //implements the For You feature
 class ForYouFilter{
