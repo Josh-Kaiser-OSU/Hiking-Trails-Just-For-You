@@ -45,7 +45,8 @@ app.get('/trails',function(req, res){
   la_longitude = -105.2519;
   //Default location is LA
   // Rendering the page in this way allows the trailList to be accessed with the trailList variable
-  res.render('trails', {"trailList": newLocation(la_latitude, la_longitude)});
+  var user = cookieParser.JSONCookie(res.cookie.userProfile);
+  res.render('trails', {"trailList": pingTrailAPI(latitude,longitude, undefined, user)});
 });
 
 //load Trail display after new location input
@@ -94,6 +95,6 @@ app.listen(app.get('port'), function(){
 //ping the API for the location of the trail and return the trailList
 function pingTrailAPI(latitude,longitude, forYouDropDown, user) {
   const myTrails = new Trail_API(latitude, longitude);
-  const filteredTrails = ForYouFilter(user1,myTrails,forYouDropDown);
+  const filteredTrails = ForYouFilter(user,myTrails,forYouDropDown);
   return filteredTrails.allTrailsList.getTrails();
 }
