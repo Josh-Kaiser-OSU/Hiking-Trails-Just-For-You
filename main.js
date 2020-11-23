@@ -14,6 +14,8 @@ const Trail_API = require('./trail_api.js').Trail_API;
 const ZipToLatLong = require('./zip_to_lat_long.js').ZipToLatLong;
 const zipToCoords = new ZipToLatLong();
 
+const ForYouFilter = require('./foryou.js').ForYouFilter;
+
 var app = express();
 app.use(session({secret:'SuperSecretPassword'}));
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
@@ -92,6 +94,6 @@ app.listen(app.get('port'), function(){
 //ping the API for the location of the trail and return the trailList
 function pingTrailAPI(latitude,longitude, forYouDropDown, user) {
   const myTrails = new Trail_API(latitude, longitude);
-  const filteredTrails = ForYouFilter(user,myTrails,forYouDropDown);
+  const filteredTrails = ForYouFilter(user1,myTrails,forYouDropDown);
   return filteredTrails.allTrailsList.getTrails();
 }
