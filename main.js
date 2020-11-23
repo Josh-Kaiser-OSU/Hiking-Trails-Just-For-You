@@ -89,5 +89,6 @@ app.listen(app.get('port'), function(){
 //input latitude and longitude, returns TrailList
 function pingTrailAPI(latitude,longitude) {
   const myTrails = new Trail_API(latitude, longitude);
+  const trailFilter = ForYouFilter(myTrails.getTrails());
   return myTrails.getTrails();
 }
