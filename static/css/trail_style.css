@@ -1,3 +1,7 @@
+.hiddenDiv {
+	visibility: hidden;
+}
+
 #trail {
 	background-color:lightblue;
 	border-radius:5px;
