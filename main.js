@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 
 //import Trail_API
 // ** This Trail_API is mock data because we were locked out of the API **
-const Trail_API = require('./trail_api.js').Trail_API;
+const Trail_API = require('./local_trail_api.js').Trail_API;
 
 //import ZipToLatLong to convert zip codes to latitude and longitude
 const ZipToLatLong = require('./zip_to_lat_long.js').ZipToLatLong;
@@ -46,7 +46,7 @@ app.get('/trails',function(req, res){
   //Default location is LA
   // Rendering the page in this way allows the trailList to be accessed with the trailList variable
   var user = cookieParser.JSONCookie(res.cookie.userProfile);
-  res.render('trails', {"trailList": pingTrailAPI(latitude,longitude, undefined, user)});
+  res.render('trails', {"trailList": pingTrailAPI(la_latitude,la_longitude, undefined, user)});
 });
 
 //load Trail display after new location input
@@ -95,6 +95,6 @@ app.listen(app.get('port'), function(){
 //ping the API for the location of the trail and return the trailList
 function pingTrailAPI(latitude,longitude, forYouDropDown, user) {
   const myTrails = new Trail_API(latitude, longitude);
-  const filteredTrails = ForYouFilter(user,myTrails,forYouDropDown);
+  const filteredTrails = new ForYouFilter(user,myTrails,forYouDropDown);
   return filteredTrails.allTrailsList.getTrails();
 }
