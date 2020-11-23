@@ -22,7 +22,7 @@ class Trail_API {
     }
 
     makeTrailsList(trailData){
-        var trails = trailData.trails;
+        console.log(trailData);
         this.allTrails = new TrailList();
         for (var i = 0; i < trails.getLength(); i++) {
             // Trails arguments (name, distanceAway, length, elevation, description, latitude, longitude, difficulty)
@@ -60,7 +60,7 @@ class Trail_API {
 
     getTrails(){
         var trailArray = [];
-        for (var i = 0; i < this.allTrails.getLength; i++){
+        for (var i = 0; i < this.allTrails.getLength(); i++){
             trailArray.append(this.allTrails.getTrail(i));
         }
         return trailArray;
