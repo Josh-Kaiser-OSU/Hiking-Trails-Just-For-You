@@ -1,6 +1,12 @@
+var Trail = require('./trail.js').Trail;
+var TrailList = require('./trail.js').TrailList;
+
+//Express boilerplate code
 var express = require('express');
 var bodyParser = require('body-parser');
 const path = require('path');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 
 //import Trail_API
@@ -11,12 +17,13 @@ const Trail_API = require('./local_trail_api.js').Trail_API;
 const ZipToLatLong = require('./zip_to_lat_long.js').ZipToLatLong;
 const zipToCoords = new ZipToLatLong();
 
-//use express handlebars
 var app = express();
+app.use(session({secret:'SuperSecretPassword'}));
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -33,6 +40,8 @@ app.get('/',function(req, res){
 
 //load Trail display page
 app.get('/trails',function(req, res){
+  //line from foryou.js to be integrated into trail display
+  //userProfile = JSON.parse(req.session.userProfile);
   la_latitude = 40.0274;
   la_longitude = -105.2519;
   //Default location is LA
@@ -42,6 +51,9 @@ app.get('/trails',function(req, res){
 
 //load Trail display after new location input
 app.post('/trails',function(req,res){
+  //line from foryou.js to be integrated into trail display
+  //userProfile = JSON.parse(req.session.userProfile);
+
   // We need to find zipToCoords Asynchronously
   zipToCoords.convert(req.body.zipcode)
   .then((result)=>{
