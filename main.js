@@ -14,8 +14,6 @@ const Trail_API = require('./trail_api.js').Trail_API;
 const ZipToLatLong = require('./zip_to_lat_long.js').ZipToLatLong;
 const zipToCoords = new ZipToLatLong();
 
-const ForYouFilter = require('./foryou.js').ForYouFilter;
-
 var app = express();
 app.use(session({secret:'SuperSecretPassword'}));
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
@@ -45,22 +43,20 @@ app.get('/trails',function(req, res){
   la_longitude = -105.2519;
   //Default location is LA
   // Rendering the page in this way allows the trailList to be accessed with the trailList variable
-  res.render('trails', {"trailList": newLocation(la_latitude, la_longitude)});
+  res.render('trails');
 });
 
 //load Trail display after new location input
 app.post('/trails',function(req,res){
   //line from foryou.js to be integrated into trail display
   //userProfile = JSON.parse(req.session.userProfile);
-  console.log(req.cookie);
+
   // We need to find zipToCoords Asynchronously
   zipToCoords.convert(req.body.zipcode)
   .then((result)=>{
     var [request_lat, request_long] = result;
     console.log(request_lat, request_long);
-	var user = cookieParser.JSONCookie(res.cookie.userProfile);
-    var thetrails = pingTrailAPI(request_lat, request_long, req.body.forYouDropDown, user);
-
+    var thetrails = newLocation(request_lat, request_long);
     res.render('trails', {"trailList": thetrails});
   })
   .catch((error)=>{
@@ -69,7 +65,6 @@ app.post('/trails',function(req,res){
   
   //, {"trailList": newLocation(la_latitude, la_longitude)});
 });
-
 
 //error status 404
 app.use(function(req,res){
@@ -92,8 +87,9 @@ app.listen(app.get('port'), function(){
 });
 
 //ping the API for the location of the trail and return the trailList
-function pingTrailAPI(latitude,longitude, forYouDropDown, user) {
+function newLocation(latitude,longitude) {
   const myTrails = new Trail_API(latitude, longitude);
-  const filteredTrails = ForYouFilter(user1,myTrails,forYouDropDown);
-  return filteredTrails.allTrailsList.getTrails();
+  const trailFilter = ForYouFilter(myTrails.getTrails());
+  return myTrails.getTrails();
 }
+
