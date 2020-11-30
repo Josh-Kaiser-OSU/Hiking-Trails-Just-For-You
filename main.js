@@ -8,13 +8,14 @@ var cookieParser = require('cookie-parser');
 
 //import Trail_API
 // ** This Trail_API is mock data because we were locked out of the API **
-const Trail_API = require('./local_trail_api.js').Trail_API;
+const Trail_API = require('./new_trail_api.js').Trail_API;
 
 //import ZipToLatLong to convert zip codes to latitude and longitude
 const ZipToLatLong = require('./zip_to_lat_long.js').ZipToLatLong;
 const zipToCoords = new ZipToLatLong();
 
 const ForYouFilter = require('./foryou.js').ForYouFilter;
+const { callbackify } = require('util');
 
 var app = express();
 app.use(session({secret:'SuperSecretPassword'}));
@@ -53,16 +54,15 @@ app.get('/trails',function(req, res){
 app.post('/trails',function(req,res){
   //line from foryou.js to be integrated into trail display
   //userProfile = JSON.parse(req.session.userProfile);
-  console.log(req.cookie);
+  // console.log(req.cookie);
   // We need to find zipToCoords Asynchronously
   zipToCoords.convert(req.body.zipcode)
   .then((result)=>{
     var [request_lat, request_long] = result;
     console.log(request_lat, request_long);
 	var user = cookieParser.JSONCookie(res.cookie.userProfile);
-    var thetrails = pingTrailAPI(request_lat, request_long, req.body.forYouDropDown, user);
-
-    res.render('trails', {"trailList": thetrails});
+    pingTrailAPI(request_lat, request_long, req.body.forYouDropDown, user, res);
+    
   })
   .catch((error)=>{
       console.log(error);
@@ -93,8 +93,15 @@ app.listen(app.get('port'), function(){
 });
 
 //ping the API for the location of the trail and return the trailList
-function pingTrailAPI(latitude,longitude, forYouDropDown, user) {
+async function pingTrailAPI(latitude,longitude, forYouDropDown, user, res) {
   const myTrails = new Trail_API(latitude, longitude);
-  const filteredTrails = new ForYouFilter(user,myTrails,forYouDropDown);
-  return filteredTrails.allTrailsList.getTrails();
+  myTrails.getTrails()
+  .then(() => {
+      // myTrails.makeTrailsList(result);
+      const filteredTrails = new ForYouFilter(user,myTrails,forYouDropDown);
+      return filteredTrails.allTrailsList.getTrails();
+  }).then((trails)=>{
+    res.render('trails', {"trailList": trails});
+  }).catch(err => console.log(err))
+  
 }
