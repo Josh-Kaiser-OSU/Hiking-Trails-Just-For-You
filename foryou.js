@@ -2,10 +2,10 @@ var Trail = require('./trail.js').Trail;
 
 //implements the For You feature
 class ForYouFilter{
-	constructor(userProfile, allTrailsList, request)
+	constructor(userProfile, allTrailsList)
 	{
 		if(userProfile && typeof(userProfile.userRec) != "undefined"){
-			this.userRating = userProfile.userRec
+			this.userRating = userProfile.userRec();
 		}
 		else
 		{
