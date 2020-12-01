@@ -98,8 +98,8 @@ async function pingTrailAPI(latitude,longitude, forYouDropDown, user, res) {
   myTrails.getTrails()
   .then(() => {
       // myTrails.makeTrailsList(result);
-      const filteredTrails = new ForYouFilter(user,myTrails,forYouDropDown);
-      return filteredTrails.allTrailsList.getTrails();
+      const filter = new ForYouFilter(user,myTrails);
+      return filter.filterList(forYouDropDown);
   }).then((trails)=>{
     res.render('trails', {"trailList": trails});
   }).catch(err => console.log(err))

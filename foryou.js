@@ -2,7 +2,7 @@ var Trail = require('./trail.js').Trail;
 
 //implements the For You feature
 class ForYouFilter{
-	constructor(userProfile, allTrailsList, request)
+	constructor(userProfile, allTrailsList)
 	{
 		if(userProfile && typeof(userProfile.userRec) != "undefined"){
 			this.userRating = userProfile.userRec
@@ -12,20 +12,23 @@ class ForYouFilter{
 			this.userRating = 3;
 		}
 		this.allTrailsList = allTrailsList;
-		this.filterList(request);
+		this.filteredTrails = [];
 	}
 	
 	//returns a TrailList containing the trails that match the request difficulty
 	filterList(request){
 		if(request == "easy"){
-			return addTrails(easyCheck);
+			this.addTrails(easyCheck);
+			return filteredTrails;
 		}
 		else if(request == "medium"){
-			return addTrails(medCheck);
+			addTrails(medCheck);
+			return filteredTrails;
 		}
 		
 		else if(request == "hard"){
-			return addTrails(hardCheck);
+			addTrails(hardCheck);
+			return filteredTrails;
 		}
 		
 		else{
@@ -35,13 +38,17 @@ class ForYouFilter{
 	
 	//goes through the main TrailList and adds Trails matching the request difficulty to the filtered TrailList
 	addTrails(checkTrail){
-		var filteredList = allTrailsList.filter(checkTrail);
+		for(var i = 0; i < allTrailsList.length; i++){
+			if(checkTrail(allTrailsList[i])){
+				filteredTrails.push(allTrailsList[i]);
+			}
+		}
 	}
 		
 //checks if trail difficulty is easier than user rating		
 	easyCheck(aTrail){
-		var traildifficulty = difficultyConverter(aTrail);
-		if(userRating < traildifficulty){
+		var trailDifficulty = difficultyConverter(aTrail);
+		if(userRating < trailDifficulty){
 			return true;
 		}
 		else{
@@ -51,8 +58,8 @@ class ForYouFilter{
 	
 //checks if trail difficulty matches user rating		
 	medCheck(aTrail){
-		var traildifficulty = difficultyConverter(aTrail);
-		if(userRating == traildifficulty){
+		var trailDifficulty = difficultyConverter(aTrail);
+		if(userRating == trailDifficulty){
 			return true;
 		}
 		else{
@@ -62,8 +69,8 @@ class ForYouFilter{
 	
 //checks if trail difficulty is harder than user rating		
 	hardCheck(aTrail){
-		var traildifficulty = difficultyConverter(aTrail);
-		if(userRating < traildifficulty){
+		var trailDifficulty = difficultyConverter(aTrail);
+		if(userRating < trailDifficulty){
 			return true;
 		}
 		else{
