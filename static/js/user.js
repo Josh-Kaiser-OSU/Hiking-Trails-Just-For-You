@@ -102,3 +102,5 @@ let User = class {
 
   const form = document.getElementsByClassName('UserForm')[0];
   form.addEventListener('submit', handleFormSubmit);
+
+  module.exports.User = User;
