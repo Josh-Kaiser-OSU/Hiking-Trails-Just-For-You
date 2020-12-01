@@ -13,93 +13,32 @@ class ForYouFilter{
 		}
 		this.allTrailsList = allTrailsList;
 		this.filteredTrails = [];
+		this.converterArray = {"green": 1, "greenBlue": 2, "blue": 3, "blueBlack": 4, "black": 5, "dblack": 6};
 	}
 	
 	//returns a TrailList containing the trails that match the request difficulty
 	filterList(request){
-		if(request == "easy"){
-			this.addTrails(easyCheck);
-			return filteredTrails;
-		}
-		else if(request == "medium"){
-			addTrails(medCheck);
-			return filteredTrails;
-		}
+		if(request == "easy" || request == "medium" || request == "hard")
+		{
+			for(var i = 0; i < this.allTrailsList.length; i++){
+				var trailDifficulty = this.converterArray[this.allTrailsList[i].difficulty];
+				if(request == 'easy' && trailDifficulty < this.userRating){
+					this.filteredTrails.push(this.allTrailsList[i]);
+				}
+				else if(request == "medium" && trailDifficulty == this.userRating){
+					this.filteredTrails.push(this.allTrailsList[i]);
+				}
 		
-		else if(request == "hard"){
-			addTrails(hardCheck);
-			return filteredTrails;
-		}
-		
-		else{
-			return this.allTrailsList;
-		}
-	}
-	
-	//goes through the main TrailList and adds Trails matching the request difficulty to the filtered TrailList
-	addTrails(checkTrail){
-		for(var i = 0; i < allTrailsList.length; i++){
-			if(checkTrail(allTrailsList[i])){
-				filteredTrails.push(allTrailsList[i]);
+				else if(request == "hard" && trailDifficulty > this.userRating){
+					this.filteredTrails.push(this.allTrailsList[i]);
+				}
 			}
+			return this.filteredTrails;
 		}
-	}
+		else{
+			return allTrailsList;
+		}
 		
-//checks if trail difficulty is easier than user rating		
-	easyCheck(aTrail){
-		var trailDifficulty = difficultyConverter(aTrail);
-		if(userRating < trailDifficulty){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-//checks if trail difficulty matches user rating		
-	medCheck(aTrail){
-		var trailDifficulty = difficultyConverter(aTrail);
-		if(userRating == trailDifficulty){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-//checks if trail difficulty is harder than user rating		
-	hardCheck(aTrail){
-		var trailDifficulty = difficultyConverter(aTrail);
-		if(userRating < trailDifficulty){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-//Since the API stores difficulty as a string, this function converts it to an int
-	difficultyConverter(aTrail){
-		switch(aTrail.getDifficulty){
-			case "dblack":
-				return 6;
-				break;
-			case "black":
-				return 5;
-				break;
-			case "blueBlack":
-				return 4;
-				break;
-			case "blue":
-				return 3;
-				break;			
-			case "greenBlue":
-				return 2;
-				break;
-			case "green":
-				return 1;
-				break;
-		}
 	}
 }
 
