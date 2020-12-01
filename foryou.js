@@ -36,7 +36,7 @@ class ForYouFilter{
 			return this.filteredTrails;
 		}
 		else{
-			return allTrailsList;	
+			return this.allTrailsList;	
 		}
 	}
 }

@@ -61,7 +61,9 @@ app.post('/trails',function(req,res){
     var [request_lat, request_long] = result;
     console.log(request_lat, request_long);
 	var user = cookieParser.JSONCookie(res.cookie.userProfile);
-    pingTrailAPI(request_lat, request_long, req.body.forYouDropDown, user, res);
+	var request_forYou = req.body.forYouDropDown;
+	console.log(request_forYou);
+    pingTrailAPI(request_lat, request_long, request_forYou, user, res);
     
   })
   .catch((error)=>{
