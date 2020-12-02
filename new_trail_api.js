@@ -5,7 +5,7 @@ var https = require('https');
 const fetch = require("node-fetch");
 
 class Trail_API {
-    constructor (latitude, longitude, distance = 10) {
+    constructor (latitude, longitude, distance = 100) {
         // User's latitude
         this.resolved = 0;
         this.latitude = latitude;
@@ -13,10 +13,12 @@ class Trail_API {
         this.longitude = longitude;
         // Distance away from user trails will be found
         this.distance = distance;
+        // Maximum trails the api will return
+        this.maxResults = 100;
         // Sarah's Trail Data API key
         this.keys = '200980056-37c2769698383bb98c9b48965aa68f84';
         // The full URL for the request
-        this.url = `https://www.hikingproject.com/data/get-trails?lat=${this.latitude}&lon=${this.longitude}&maxDistance=${this.distance}&key=${this.keys}`;
+        this.url = `https://www.hikingproject.com/data/get-trails?lat=${this.latitude}&lon=${this.longitude}&maxDistance=${this.distance}&maxResults=${this.maxResults}&key=${this.keys}`;
     }
 
     makeTrailsList(trailData){
