@@ -60,11 +60,8 @@ app.post('/trails',function(req,res){
   .then((result)=>{
     var [request_lat, request_long] = result;
     console.log(request_lat, request_long);
-	var user = cookieParser.JSONCookie(res.cookie.userProfile);
-	var request_forYou = req.body.forYouDropDown;
-	console.log(request_forYou);
-    pingTrailAPI(request_lat, request_long, request_forYou, user, res);
-    
+	  var user = cookieParser.JSONCookie(res.cookie.userProfile);
+    pingTrailAPI(request_lat, request_long, req.body.forYouDropDown, user, res);
   })
   .catch((error)=>{
       console.log(error);
@@ -100,8 +97,8 @@ async function pingTrailAPI(latitude,longitude, forYouDropDown, user, res) {
   myTrails.getTrails()
   .then(() => {
       // myTrails.makeTrailsList(result);
-      const filter = new ForYouFilter(user,myTrails);
-      return filter.filterList(forYouDropDown);
+      const filteredTrails = new ForYouFilter(user,myTrails,forYouDropDown);
+      return filteredTrails.allTrailsList.getTrails();
   }).then((trails)=>{
     res.render('trails', {"trailList": trails});
   }).catch(err => console.log(err))
