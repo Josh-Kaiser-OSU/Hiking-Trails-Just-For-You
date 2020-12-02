@@ -4,6 +4,7 @@ class Coordinates{
 	constructor(longitude, latitude){
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.navigate = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(this.longitude + "," + this.latitude);
 	}
 	get getLongitude(){
 		return this.longitude;
