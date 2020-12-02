@@ -36,7 +36,6 @@
   		</form>
 
 	  <div class = "forYouFilter">
-		<form method="POST" action = "/trails">
 		<label for="forYouDropDown">Just For You:</label>
 		<select name="forYouDropDown" id="forYouDropDown">
 		   <option value=""></option>
@@ -44,8 +43,6 @@
 		   <option value="medium">At My Level</option>
 		   <option value="hard">Challenge Me</option>
 		 </select>
-		 <button type="submit">Save</button>
-		 </form>
 	  </div>
 		  
   	<div class = "trailList">
@@ -57,7 +54,7 @@
               <button class="expandButton"> More Information </button>
               <div class="hiddenDiv">
                 <span>{{this.description}}</span>
-                <a target = "_blank" href = {{this.location.navigate}}> Navigate to this trail </a>
+                <a target = "_blank" href = {{this.location.navigate}}> Navigate to this trail</a>
               </div>
     		</div>
       {{/each}}
@@ -66,7 +63,11 @@
     {{#each js}}
       <link href="./js/{{this}}", rel="stylesheet">
     {{/each}}
+
+<script src="/js/user.js"></script>
 <script src="/js/moreTrailInfo.js"></script>
+<script src="/js/trailFilter.js"></script>
+
 </body>
 
 </html>
