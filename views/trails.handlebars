@@ -50,13 +50,14 @@
 		  
   	<div class = "trailList">
       {{#each trailList}}
-    		<div id = "trail">
+    		<div class = "trail">
               <b>{{this.name}}</b>
               <span>Trail Length: {{this.length}}</span>
               <span>Trail Difficulty: {{this.difficulty}}</span>
               <button class="expandButton"> More Information </button>
               <div class="hiddenDiv">
                 <span>{{this.description}}</span>
+                <a target = "_blank" href = {{this.location.navigate}}> Navigate to this trail </a>
               </div>
     		</div>
       {{/each}}
